@@ -27,7 +27,7 @@ tox = "^3.25.1"
 mock = "^4.0.3"
 bumpversion = "^0.6.0"
 pytest-container = "^0.0.2"
-pytest-xdist = "^2.5.0"
+pytest-xdist = "^3.0.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
