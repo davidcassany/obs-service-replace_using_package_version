@@ -102,8 +102,14 @@ def main():
     """
     main-entry point for program, expects dict with arguments from docopt()
     """
-    # TODO: probably there is a better way to set the repositories path
-    rpm_dir = './repos'
+    # This is the path for the build time local RPM repository
+    # in mkosi build environments
+    rpm_dir = '/.build.binaries'
+
+    if not os.path.exists(rpm_dir):
+        # This is the path for the build time local RPM repository
+        # in RPM and KIWI build environments
+        rpm_dir = './repos'
 
     command_args = docopt.docopt(__doc__)
 

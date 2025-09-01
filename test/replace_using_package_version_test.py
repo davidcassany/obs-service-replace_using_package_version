@@ -205,14 +205,16 @@ class TestRegexReplacePackageVersion(object):
         'replace_using_package_version.find_package_version'
     ))
     @patch('docopt.docopt')
+    @patch('os.path.exists')
     @patch('os.path.isdir')
     @patch('os.path.isfile')
     def test_main_package(
-        self, mock_isfile, mock_isdir, mock_docopt,
-        mock_find_pkg, mock_apply_regex
+        self, mock_isfile, mock_isdir, mock_exists,
+        mock_docopt, mock_find_pkg, mock_apply_regex
     ):
         mock_isdir.return_value = True
         mock_isfile.return_value = True
+        mock_exists.return_value = False
         mock_docopt.return_value = {
             '--package': 'package',
             '--file': 'file',
@@ -242,14 +244,16 @@ class TestRegexReplacePackageVersion(object):
         'replace_using_package_version.find_package_version'
     ))
     @patch('docopt.docopt')
+    @patch('os.path.exists')
     @patch('os.path.isdir')
     @patch('os.path.isfile')
     def test_main_package_parse_version(
-        self, mock_isfile, mock_isdir, mock_docopt,
+        self, mock_isfile, mock_isdir, mock_exists, mock_docopt,
         mock_find_pkg, mock_apply_regex, mock_match_version
     ):
         mock_isdir.return_value = True
         mock_isfile.return_value = True
+        mock_exists.return_value = True
         mock_docopt.return_value = {
             '--package': 'package',
             '--file': 'file',
@@ -261,7 +265,7 @@ class TestRegexReplacePackageVersion(object):
         mock_match_version.return_value = '0.0'
         main()
         mock_find_pkg.assert_called_once_with(
-            'package', './repos'
+            'package', '/.build.binaries'
         )
         mock_apply_regex.assert_called_once_with(
             'file', 'outdir/file', 'regex', '0.0'
